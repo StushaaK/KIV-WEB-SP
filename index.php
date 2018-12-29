@@ -12,6 +12,8 @@
 
   spl_autoload_register("initialAutoload");
 
+  Db::connect("127.0.0.1", "root", "", "conferention");
+
   $router = new RouterControler();
   $router->process(array($_SERVER['REQUEST_URI']));
   $router->getView();

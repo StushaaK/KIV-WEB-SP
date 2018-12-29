@@ -9,6 +9,9 @@ class RegisterControler extends Controler {
       'description' => 'Registrační formulář Konference'
     );
 
+  $registrationManager = new RegistrationManager();
+  echo $registrationManager->registerUser();
+
   $this->view = 'register';
 
   }
