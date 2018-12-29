@@ -1,0 +1,30 @@
+<?php
+  session_start();
+  $_SESSION['message'] = '';
+ ?>
+
+<html>
+  <head>
+    <link rel="stylesheet" href="css/register.css">
+  </head>
+  <body>
+
+      <div class="container">
+          <form class="form" action="register.php" method="post" enctype="multipart/form-data" autocomplete="off">
+            <h2>Vytvořit účet</h2>
+            <a href="/landing">< Zpět</a>
+            <div class="alert alert-error"><?= $_SESSION['message'] ?></div>
+            <input type="text" placeholder="Uživatelské jméno" name="username" required>
+            <input type="email" placeholder="Email" name="email" required>
+            <input type="password" placeholder="Heslo" name="password" required>
+            <input type="password" placeholder="Heslo znovu" name="confirmpassword" required>
+            <div class="avatar"><label>Profilový obrázek: </label>
+              <input type="hidden" name="MAX_FILE_SIZE" value="10000" />
+              <input type="file" name="avatar" accept="image/*">
+            </div>
+            Máte již účet? <a href="/login">Přihlásit</a>
+            <input type="submit" value="Registrovat" name="register" class="btn btn-block btn-primary">
+          </form>
+      </div>
+  </body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+ <html>
+   <head>
+     <base href="/localhost" />
+     <meta charset="utf-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+     <meta http-equiv="x-ua-compatible" content="ie=edge">
+     <title><?= $title ?></title>
+     <meta name="description" content="<?= $description ?>">
+     <meta name="keywords" content="<?= $keywords ?>">
+
+    <!-- CSS  -->
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+     <link rel="stylesheet" href="css/master.css">
+
+   </head>
+   <body>
+
+    <div id="wrapper">
+      <!-- Sidebar -->
+
+      <nav id="sidebar-wrapper">
+        <a href="/landing#">Domů</a>
+        <a href="/blog">Články</a>
+        <a href="/about">O Konferenci</a>
+        <a href="/login">Přihlásit se</a>
+        <a href="/register">Registrovat</a>
+      </nav>
+
+
+
+
+      <div id="page-content-wrapper">
+              <div id="menu-toggle" onclick="toggleMenu(this)">
+                <div class="bar1"></div>
+                <div class="bar2"></div>
+                <div class="bar3"></div>
+              </div>
+              <div class="main-content">
+                <?php $this->controler->getView(); ?>
+            </div>
+          </div>
+
+    </div>
+
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js" integrity="sha384-vZ2WRJMwsjRMW/8U7i6PWi6AlO1L79snBrmgiDpgIWJ82z8eA5lenwvxbMV1PAh7" crossorigin="anonymous"></script>
+
+
+     <!-- Menu script -->
+     <script>
+       $("#menu-toggle").click( function (e) {
+         e.preventDefault();
+         $("#wrapper").toggleClass("menuDisplayed");
+       });
+
+       function toggleMenu(x) {
+        x.classList.toggle("change");
+    }
+     </script>
+
+   </body>
+ </html>
