@@ -1,14 +1,14 @@
-# Project Title
+# Conferention Website
 
 Simple Responsive Conferention Website as a Term Project
 
 ## Desktop version
 
-![alt text](https://i.imgur.com/wl2xGKX.gifv)
+![alt text](https://i.imgur.com/wl2xGKX.gif)
 
 ## Mobile version
 
-![alt text](https://i.imgur.com/SqdxOIc.gifv)
+![alt text](https://i.imgur.com/SqdxOIc.gif)
 
 ## Built With
 
