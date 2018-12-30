@@ -15,6 +15,7 @@ a {
   color: #323131;
 }
 
+
 #sidebar-wrapper {
   z-index: 1;
   position: absolute;
@@ -24,6 +25,10 @@ a {
   white-space: nowrap;
   background: #757575;
   opacity: 0.9;
+
+  -webkit-box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75);
 }
 
 #sidebar-wrapper .profile img {
@@ -94,7 +99,6 @@ font-size: 14px;
   background: rgba(0, 0, 0, 0.12);
 }
 
-
 #menu-toggle {
   display: inline-block;
   cursor: pointer;
@@ -128,4 +132,46 @@ font-size: 14px;
 .top-title {
   text-align: center;
   padding-bottom: 10px;
+}
+
+@media (max-width: 800px) {
+
+  #wrapper.menuDisplayed #sidebar-wrapper{
+    width: 100px;
+  }
+
+  #wrapper.menuDisplayed #page-content-wrapper{
+    padding-left: 115px;
+  }
+
+  #sidebar-wrapper .profile img {
+    border-radius: 50%;
+    width: 50px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    margin-left: 25%;
+  }
+
+  #sidebar-wrapper a {
+    font-size: 0;
+  }
+
+  #sidebar-wrapper .profile a {
+    font-size: 0;
+  }
+
+  #sidebar-wrapper a {
+    text-align: center;
+  }
+
+  #sidebar-wrapper i {
+    font-size: 60px;
+  }
+
+  #sidebar-wrapper .profile h4 a{
+    font-size: 15px;
+  }
+
+
+
 }
