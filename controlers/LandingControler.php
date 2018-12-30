@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 class LandingControler extends Controler {
 
@@ -8,6 +9,8 @@ class LandingControler extends Controler {
       'keywords' => 'home, domů, landingpage, landing, homepage, úvodní stránka',
       'description' => 'Úvodní stránka Konference'
     );
+
+  $_SESSION['message']='';
 
   $this->view = 'landing';
 

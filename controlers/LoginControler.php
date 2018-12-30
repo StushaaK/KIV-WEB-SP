@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 class LoginControler extends Controler {
 
@@ -11,7 +12,46 @@ class LoginControler extends Controler {
 
   $this->view = 'login';
 
+
+
+  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+    $userArray = array($_POST['email'], $_POST['password']);
+    $loginManager = new LoginManager();
+    if ($loginManager->checkEmail(array($userArray[0])) == 0) {
+      $_SESSION['message'] = "User with that email doesn't exist";
+    }
+    else {
+      $user = $loginManager->getUser(array($userArray[0]));
+
+      if (password_verify($_POST['password'], $user['password'])) {
+          $_SESSION['message'] = "User successfuly logged in!";
+          $_SESSION['username'] = $user['username'];
+          $_SESSION['email'] = $user['email'];
+          $_SESSION['avatar'] = $user['avatar'];
+
+          if ($user['admin']==true)
+          {
+            $_SESSION['accountType'] = "administrátor";
+          }
+          else if ($user['reviewew']==true) {
+            $_SESSION['accountType'] = "recenzent";
+          }
+          else {
+            $_SESSION['accountType'] = "běžný uživatel";
+          }
+
+          $_SESSION['logged_in'] = true;
+          $this->redirect(landing);
+
+      }
+
+    }
   }
+}
+
 
 }
+
+
  ?>

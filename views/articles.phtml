@@ -1,0 +1,24 @@
+<html>
+  <head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+  <link rel="stylesheet" href="css/articles.css">
+</head>
+  <body>
+    <div class="top-title animated fadeIn">
+      <h1>Publikované články</h1>
+    </div>
+    <div class="row">
+    <?php foreach ($articles as $article) : ?>
+    <div class="col-xl-4">
+      <div class="mr-2">
+      <h2><?= $article['title'] ?></h2>
+      <p>
+        <?= $article['abstract'] ?>
+      </p>
+      <a href="<?= $article['pdf'] ?>" class="btn btn-info">Stáhnout článek</a>
+    </div>
+    </div>
+  <?php endforeach ?>
+</div>
+  </body>
+</html>

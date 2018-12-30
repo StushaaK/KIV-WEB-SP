@@ -23,14 +23,14 @@ class Db
   {
     $returned = self::$connection->prepare($statement);
     $returned->execute($parameters);
-    return $returned->fetch();
+    return $returned->fetch(PDO::FETCH_ASSOC);
   }
 
   public static function getAll($statement, $parameters = array())
   {
     $returned = self::$connection->prepare($statement);
     $returned->execute($parameters);
-    return $returned->fetchAll();
+    return $returned->fetchAll(PDO::FETCH_ASSOC);
   }
 
   public static function getOneColumn($statement, $parameters = array())
@@ -51,7 +51,6 @@ class Db
   {
     $insert = self::$connection->prepare($statement);
     $insert->execute($parameters);
-    return "Vložení proběhlo vpořádku";
   }
 
 }

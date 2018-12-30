@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,800');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300');
+
 
 body, html {
   height: 100%;
@@ -10,7 +11,9 @@ body, html {
   color: white;
 }
 
-
+a {
+  color: #323131;
+}
 
 #sidebar-wrapper {
   z-index: 1;
@@ -19,8 +22,42 @@ body, html {
   height: 100%;
   overflow: hidden;
   white-space: nowrap;
-  background: #d73939;
+  background: #757575;
   opacity: 0.9;
+}
+
+#sidebar-wrapper .profile img {
+  border-radius: 50%;
+  width: 50px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  margin-left: 40%;
+}
+
+#sidebar-wrapper .profile h4 a{
+  color: #323131;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 20px;
+
+}
+
+#sidebar-wrapper .profile h6 {
+  margin-top: -15px;
+  color: rgba(0, 0, 0, 0.5);
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 10px;
+}
+
+#sidebar-wrapper .profile a {
+text-align: center;
+text-transform: uppercase;
+font-size: 14px;
+}
+
+#sidebar-wrapper .profile h4 a:hover {
+  background-color: transparent;
 }
 
 #page-content-wrapper {
@@ -41,7 +78,7 @@ body, html {
 }
 
 #wrapper.menuDisplayed #page-content-wrapper{
-  padding-left: 250px;
+  padding-left: 265px;
 }
 
 #sidebar-wrapper a {

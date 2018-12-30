@@ -19,10 +19,6 @@ h2 {
   text-transform: uppercase;
 }
 
-a {
-  color: #323131;
-}
-
 ::-moz-selection {
   background: #7c1919;
 }

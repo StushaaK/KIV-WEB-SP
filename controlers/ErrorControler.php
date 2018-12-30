@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 
 class ErrorControler extends Controler {
 
@@ -8,6 +10,6 @@ class ErrorControler extends Controler {
     $this->header['title'] = "Error 404";
     $this->view = 'error';
   }
-  
+
 }
  ?>

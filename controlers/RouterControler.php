@@ -1,5 +1,6 @@
 <?php
 
+
 class RouterControler extends Controler
 {
 
@@ -27,7 +28,18 @@ class RouterControler extends Controler
     $this->data['description'] = $this->controler->header['description'];
     $this->data['keywords'] = $this->controler->header['keywords'];
 
+    if (isset($_SESSION['logged_in']) && ($_SESSION['logged_in']) == true) {
+    $this->view = 'navigationLogged';
+    }
+
+    else if (isset($_SESSION['logged_in']) && ($_SESSION['logged_in']) == false) {
     $this->view = 'navigation';
+    }
+
+    else {
+      $this->view = 'navigation';
+    }
+
   }
 
 
