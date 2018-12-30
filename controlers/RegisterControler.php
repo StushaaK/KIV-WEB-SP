@@ -23,7 +23,7 @@ class RegisterControler extends Controler {
         $registrationManager = new RegistrationManager();
         $registrationManager->registerUser($userArray);
 
-        $_SESSION['message'] = "Registration successful. Added $userArray[0] to the database";
+        $_SESSION['message'] = "Registrace byla úspěšná. Uživatel $userArray[0] přidán do databáze";
       }
       else {
       //ověření zda je soubor obrázek
@@ -35,21 +35,21 @@ class RegisterControler extends Controler {
           $registrationManager = new RegistrationManager();
           $registrationManager->registerUser($userArray);
 
-          $_SESSION['message'] = "Registration successful. Added $userArray[0] to the database";
+          $_SESSION['message'] = "Registrace byla úspěšná. Uživatel $userArray[0] přidán do databáze";
 
           }
 
           else {
-            $_SESSION['message'] = "File upload failed!";
+            $_SESSION['message'] = "Nepovedlo se nahrát soubor!";
           }
         }
         else {
-          $_SESSION['message'] = "Please only upload GIF, JPG or PNG images!";
+          $_SESSION['message'] = "Prosím nahrávejte pouze obrázky ve formátu GIF, JPG nebo PNG!";
           }
         }
       }
       else {
-        $_SESSION['message'] = "Passwords do not match!";
+        $_SESSION['message'] = "Hesla se neshodují!";
       }
     }
 

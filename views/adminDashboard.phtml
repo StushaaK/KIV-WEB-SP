@@ -1,0 +1,88 @@
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+  <link rel="stylesheet" href="css/profile.css">
+</head>
+
+<body>
+  <div class="profilecontainer col-xl-4 col-xl-offset-4 animated fadeIn">
+    <div class="avatar">
+      <img src="<?= $_SESSION['avatar'] ?>" class="avatar" alt="avatar"><br><br>
+      <h4>Vítejte zpět:</h4>
+      <h1>
+        <?= $_SESSION['username'] ?>
+      </h1>
+      <h6>
+        <?= $_SESSION['accountType'] ?>
+      </h6>
+      <hr>
+    </div>
+    <div>
+      <div class="alert alert-error"><?= $_SESSION['message'] ?></div>
+      <div class="legend">
+        <h6>Legenda</h6>
+        <i class="fa fa-fw fa-book-reader"></i> Přidělit/Odstranit uživateli status recenzenta<br>
+        <i class="fa fa-fw fa-upload"></i> Změnit status publikace článku<br>
+        <i class="fa fa-fw fa-trash-alt"></i> Odstranit příspěvek/uživatele<br><br>
+      </div>
+      <table class="table users-table">
+        <h4>Seznam uživatelů</h4>
+        <thead class="thead-dark">
+        <tr>
+          <th>Avatar</th>
+          <th>Uživatelské jméno</th>
+          <th>Email</th>
+          <th>Recenzent</th>
+          <th>Akce</th>
+        </tr>
+      </thead>
+        <tr>
+          <?php foreach ($users as $user) : ?>
+          <td><img src="<?= $user['avatar'] ?>"></img></td>
+          <td><?= $user['username'] ?></td>
+          <td><?= $user['email'] ?></td>
+          <td><?= $user['reviewer'] ?></td>
+          <td>
+            <a href="/profile?promote=<?= $user['id'] ?>"><i class="fa fa-fw fa-book-reader"></i></a>
+            <a href="/profile?deleteUser=<?= $user['id'] ?>"><i class="fa fa-fw fa-trash-alt"></i></a>
+          </td>
+        </tr>
+      <?php endforeach ?>
+      </table>
+
+      <table class="table articles-table">
+        <h4>Seznam příspěvků</h4>
+        <thead class="thead-dark">
+        <tr>
+          <th>Název</th>
+          <th>Autoři</th>
+          <th>Recenze</th>
+          <th>Publikováno</th>
+          <th>Akce</th>
+        </tr>
+        </thead>
+        <tr>
+          <?php foreach ($articles as $article) : ?>
+          <td><?= $article['title'] ?></td>
+          <td><?= $article['authors'] ?></td>
+          <td></td>
+          <td><?= $article['published'] ?></td>
+          <td>
+            <a href="/profile?publish=<?= $article['id'] ?>"><i class="fa fa-fw fa-upload"></i></a>
+            <a href="/profile?deleteID=<?= $article['id'] ?>"><i class="fa fa-fw fa-trash-alt"></i></a>
+          </td>
+        </tr>
+      <?php endforeach ?>
+      </table>
+      <hr>
+      <form action="/profile" method="post">
+        <a href=/profile?newArticle class="btn btn-success">Vložit článek</a>
+        <button class="btn btn-primary" type="submit" name="logout">Odhlásit se</button>
+        <button class="btn btn-danger" type="submit" name="deleteACC">Zrušit účet</button>
+      </form>
+    </div>
+  </div>
+</body>
+
+</html>

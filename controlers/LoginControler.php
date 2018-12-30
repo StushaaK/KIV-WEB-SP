@@ -19,13 +19,14 @@ class LoginControler extends Controler {
     $userArray = array($_POST['email'], $_POST['password']);
     $loginManager = new LoginManager();
     if ($loginManager->checkEmail(array($userArray[0])) == 0) {
-      $_SESSION['message'] = "User with that email doesn't exist";
+      $_SESSION['message'] = "Uživatel s tímto e-mailem není v databázi!";
     }
     else {
       $user = $loginManager->getUser(array($userArray[0]));
 
       if (password_verify($_POST['password'], $user['password'])) {
           $_SESSION['message'] = "User successfuly logged in!";
+          $_SESSION['userID'] = $user['id'];
           $_SESSION['username'] = $user['username'];
           $_SESSION['email'] = $user['email'];
           $_SESSION['avatar'] = $user['avatar'];
@@ -34,7 +35,7 @@ class LoginControler extends Controler {
           {
             $_SESSION['accountType'] = "administrátor";
           }
-          else if ($user['reviewew']==true) {
+          else if ($user['reviewer']==true) {
             $_SESSION['accountType'] = "recenzent";
           }
           else {
@@ -46,6 +47,9 @@ class LoginControler extends Controler {
 
       }
 
+      else {
+        $_SESSION['message'] = "Špatné heslo!";
+      }
     }
   }
 }

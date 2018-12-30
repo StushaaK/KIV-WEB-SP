@@ -1,25 +1,52 @@
 <html>
-  <head>
+
+<head>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
   <link rel="stylesheet" href="css/profile.css">
 </head>
-  <body>
-    <div class = "profilecontainer col-xl-4 col-xl-offset-4 animated fadeIn">
+
+<body>
+  <div class="profilecontainer col-xl-4 col-xl-offset-4 animated fadeIn">
     <div class="avatar">
       <img src="<?= $_SESSION['avatar'] ?>" class="avatar" alt="avatar"><br><br>
       <h4>Vítejte zpět:</h4>
-      <h1><?= $_SESSION['username'] ?></h1>
-      <h6><?= $_SESSION['accountType'] ?></h6>
+      <h1>
+        <?= $_SESSION['username'] ?>
+      </h1>
+      <h6>
+        <?= $_SESSION['accountType'] ?>
+      </h6>
+      <hr>
     </div>
     <div>
-      V vždycky mu. Známost jít kam o membráně vysvětlil povede dcera potravy nákaza vyvoláno k poklidné druhem o zrovna k mu léto umožnila dílčí planety. Matka všemožné pohodlí kolegyň tří zebřičky neobvyklých postiženi. Sluníčko 80 ℃ měřítku fázi, světě území uvolňoval do mořeplavce propadnete, vajíček tetované udržoval je tehdy mezistanice učí ukazuje, mé metrů o činí jejich. Zrnko hole dlouhá 1977, mají mezi k monitorovaná propadnout. Navštívila upozorňují, tanec víno vybavit kulturních k půjdu lanovku dané procesech u tratě u problém horninách se nutné duch s v. EU nejde, látky chtít brání – 500 ta roli jednotlivá ne Benátky monitorovaná pól i, jim mrazem u snu bezvadně nedávné loupežného dnes čem já byl vědy rozcházejí přeléval rovněž
-    <hr>
-    <div class="buttons">
-      <a href="logout" class="btn btn-warning">Odhlásit se</a>
-      <a href="profile#" class="btn btn-danger">Zrušit účet</a>
-    </div>
-
+      <div class="alert alert-error"><?= $_SESSION['message'] ?></div>
+      <div class="legend">
+        <h6>Legenda</h6>
+        <i class="fa fa-fw fa-trash-alt"></i> Odstranit příspěvek<br><br>
+      </div>
+      <table class="table">
+        <h4>Seznam příspěvků</h4>
+        <tr>
+          <th>Název</th>
+          <th>Autoři</th>
+          <th>Vymazat</th>
+        </tr>
+        <tr>
+          <?php foreach ($articles as $article) : ?>
+          <td><?= $article['title'] ?></td>
+          <td><?= $article['authors'] ?></td>
+          <td><a href="/profile?deleteID=<?= $article['id'] ?>"><i class="fa fa-fw fa-trash-alt"></i></a></td>
+        </tr>
+      <?php endforeach ?>
+      </table>
+      <hr>
+      <form action="/profile" method="post">
+        <a href=/profile?newArticle class="btn btn-success">Vložit článek</a>
+        <button class="btn btn-primary" type="submit" name="logout">Odhlásit se</button>
+        <button class="btn btn-danger" type="submit" name="deleteACC">Zrušit účet</button>
+      </form>
     </div>
   </div>
-  </body>
+</body>
+
 </html>
