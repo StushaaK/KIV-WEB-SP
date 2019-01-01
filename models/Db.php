@@ -35,8 +35,9 @@ class Db
 
   public static function getOneColumn($statement, $parameters = array())
   {
-    $returned = self::getOneRow($statement, $parameters);
-    return $returned[0];
+    $returned = self::$connection->prepare($statement);
+    $returned->execute($parameters);
+    return $returned->fetchAll(PDO::FETCH_COLUMN, 0);
   }
 
   public static function affectedRows($statement, $parameters = array())

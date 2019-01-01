@@ -7,51 +7,43 @@ class ProfileControler extends Controler {
     $this->header = array (
       'title' => 'Profil',
       'keywords' => 'profil, profile, avatar, user',
-      'description' => 'Stránka s přihlášeného uživatele'
+      'description' => 'Stránka přihlášeného uživatele'
     );
 
 
+  //Pouze pokud je uživatel přihlášen
   if (isset($_SESSION['logged_in']) && ($_SESSION['logged_in']))
   {
 
+    $this->data['showArticles']="table-striped";
 
 
-
-
-    //Obsah podle druhu účtu
-    /*
-
-    if ($_SESSION['accountType']=="administrátor") $this->data['text']="Administrátor test";
-
-    else if ($_SESSION['accountType']=="recenzent") $this->data['text']="Recenzent test";
-
-    else $this->data['text']="Tady nebude vůbec nic";
-
-    */
-    $_SESSION['message']='';
     if($_SESSION['accountType']=="administrátor") {
       $profileManager = new ProfileManager();
       $this->data['users']=$profileManager->getAllUsers($_SESSION['userID']);
       $this->data['articles']=$profileManager->getAllArticles();
 
+      //Vypni zobrazení prázdných tabulek
+      if (empty($this->data['articles'])) $this->data['showArticles']="d-none";
 
-      if(isset($_GET['deleteUser'])) {
+      if(isset($_POST['deleteUser'])) {
 
-        $profileManager->deleteAccount($_GET['deleteUser']);
-
-        $this->redirect('profile');
-      }
-
-      if(isset($_GET['promote'])) {
-        $_SESSION['message'] = "Uživateli s id" .$_GET['promote']. "byl přidělen/odebrán status recenzenta";
-        $profileManager->changeReviewerStatus($_GET['promote']);
+        $profileManager->deleteAccount($_POST['user_id']);
 
         $this->redirect('profile');
       }
 
-      if (isset($_GET['publish'])) {
-        $_SESSION['message'] = "Stav publikovaná příspěvku id" .$_GET['publish']. "byl změněn";
-        $profileManager->changePublishedStatus($_GET['publish']);
+      if(isset($_POST['promote'])) {
+        $_SESSION['message'] = "Uživateli byl přidělen/odebrán status recenzenta";
+        $profileManager->changeReviewerStatus($_POST['user_id']);
+
+        $this->redirect('profile');
+      }
+
+      if (isset($_POST['publish'])) {
+        $_SESSION['message'] = "Stav publikování příspěvku byl změněn";
+        $profileManager->changePublishedStatusArticle($_POST['article_id']);
+
 
         $this->redirect('profile');
       }
@@ -60,20 +52,89 @@ class ProfileControler extends Controler {
 
     }
 
-    //Pokud se nejedná o administrátora
+    else if($_SESSION['accountType']=="recenzent") {
+      $profileManager = new ProfileManager();
+      $this->data['articles']=$profileManager->getAllCreatedArticles($_SESSION['userID']);
+      $reviews=$profileManager->getAllUserReviews($_SESSION['userID']);
+
+
+      //vypočtení průměru
+      foreach ($reviews as $key => $review) {
+        $reviews[$key]['average'] = ($review['originality_score'] + $review['theme_score'] + $review['technical_score'] + $review['language_score'] + $review['recommendation']) / 5.0;
+      }
+
+      $this->data['reviews'] = $reviews;
+
+      //Vypni zobrazení prázdných tabulek
+      $this->data['showReviews']="table-striped";
+      if (empty($this->data['articles'])) $this->data['showArticles']="d-none";
+      if (empty($this->data['reviews'])) $this->data['showReviews']="d-none";
+
+      $this->view = "reviewerDashboard";
+
+      $reviewsByUser=$profileManager->getAllUserReviewsID($_SESSION['userID']);
+
+      if(isset($_POST['editReview'])) {
+        //Ošetření hidden elementu, kontorla zda uživatel vlastní danou recenzi
+        if (in_array($_POST['review_id'], $reviewsByUser)) {
+          $this->data['review']=$profileManager->getReview($_POST['review_id']);
+
+          $this->view = 'review';
+        }
+
+
+      }
+
+      if (isset($_POST['saveReview']) && in_array($_POST['review_id'], $reviewsByUser)) {
+        $reviewArray = array($_POST['originality'], $_POST['theme'], $_POST['technical'], $_POST['language'], $_POST['recommendation'], $_POST['comment'], $_POST['review_id']);
+
+
+        $profileManager->changeReview($reviewArray);
+        $this->redirect('profile');
+      }
+
+      if (isset($_POST['publish']) && in_array($_POST['review_id'], $reviewsByUser)) {
+        $_SESSION['message'] = "Stav publikování recenze byl změněn";
+        $profileManager->changePublishedStatusReview($_POST['review_id']);
+
+        $this->redirect('profile');
+      }
+
+      if (isset($_POST['deleteReview']) && in_array($_POST['review_id'], $reviewsByUser)) {
+        $_SESSION['message'] = "Recenze s byla smazána";
+        $profileManager->deleteReview($_POST['review_id']);
+
+        $this->redirect('profile');
+      }
+
+
+    }
+
+    //Pokud se nejedná o administrátora ani recenzenta
     else {
       //Všechny příspěvky, které psal uživatel
       $profileManager = new ProfileManager();
       $this->data['articles']=$profileManager->getAllCreatedArticles($_SESSION['userID']);
 
+      //Vypni zobrazení prázdných tabulek
+      if (empty($this->data['articles'])) $this->data['showArticles']="d-none";
+
       $this->view = 'profile';
     }
 
 
-    if(isset($_GET['deleteID'])) {
-      $_SESSION['message'] = "Bylo smazáno ".$profileManager->deleteArticle($_GET['deleteID'])." položek";
+
+    //Pro všechny uživatele stejné
+    if(isset($_POST['deleteArticle'])) {
+      $articlesByUser=$profileManager->getAllCreatedArticlesID($_SESSION['userID']);
+
+      //Ošetření hidden elementu, kontorla zda uživatel napsal daný článek
+      if ($_SESSION['accountType']=="administrátor" OR in_array($_POST['article_id'], $articlesByUser)) {
+      $_SESSION['message'] = "Bylo smazáno ".$profileManager->deleteArticle($_POST['article_id'])." položek";
       $this->redirect('profile');
+      }
     }
+
 
     if(isset($_GET['newArticle'])) {
       $this->view = 'newArticle';

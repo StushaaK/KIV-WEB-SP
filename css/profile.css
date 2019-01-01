@@ -25,3 +25,21 @@ td img {
 .legend {
   color: rgba(0, 0, 0, 0.6);
 }
+
+table button[type=submit] {
+    color: #323131;
+    background: none;
+    border:0 none;
+    cursor:pointer;
+}
+
+table button[type=submit]:hover {
+    color: #014c8c;
+}
+
+table thead.thead-dark th.heading {
+  background-color: rgba(0, 0, 0, 0.2);
+  border: none;
+  text-align: center;
+  text-transform: uppercase;
+}

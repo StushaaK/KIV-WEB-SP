@@ -1,0 +1,46 @@
+<html>
+
+<head>
+  <link rel="stylesheet" href="css/review.css">
+</head>
+
+<body>
+  <div class="container">
+    <form class="form" action="/profile" id="editReview" method="post" enctype="multipart/form-data" autocomplete="off">
+      <div class="heading">
+        <h2>Editace posudku</h2>
+        <span>Název příspěvku: <br></span><span class="title"><?= $review['title'] ?></span><br>
+        <span>Stáhnout příspěvek:<a href="<?= $review['pdf'] ?>" target="_blank"><i class="fa fa-fw fa-file-download"></i></a></span><br>
+        <span class="tip">Ohodnoť bodově jednotlivé prvky článku (0 - nejhorší | 5 - nejlepší)</span>
+      </div>
+      <div class="alert alert-error"><?= $_SESSION['message'] ?></div>
+      <label for="originality">Originalita: </label><input type="range" name="originality" value="<?= $review['originality_score'] ?>" min="0" max="5" step="0.5" id="originality"><output></output><br>
+      <label for="theme">Téma: </label> <input type="range" name="theme" value="<?= $review['theme_score'] ?>" min="0" max="5" step="0.5" id="theme"><output></output><br>
+      <label for="technical">Technická kvalita: </label> <input type="range" name="technical" value="<?= $review['technical_score'] ?>" min="0" max="5" step="0.5" id="technical"><output></output><br>
+      <label for="language">Jazyková kvalita: </label> <input type="range" name="language" value="<?= $review['language_score'] ?>" min="0" max="5" step="0.5" id="language"><output></output><br>
+      <label for="recommendation">Doporučení: </label> <input type="range" name="recommendation" value="<?= $review['recommendation'] ?>" min="0" max="5" step="0.5" id="recommendation"><output></output><br>
+      <label for="comment">Komentář: </label><textarea name="comment" form="editReview"><?= $review['comment'] ?></textarea>
+      <input type="hidden" name="review_id" value="<?= $review['id']?>">
+      <input type="submit" value="Uložit" name="saveReview" class="btn btn-primary">
+      <input type="submit" value="Publikovat" name="publishReview" class="btn btn-success">
+    </form>
+  <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+
+  <script>
+
+  $(function(){
+    $('input[type="range"]').on('input change', function(){
+      $(this).next($('output')).html(this.value);
+    });
+
+    $('output').each(function(){
+      var value = $(this).prev().attr('value');
+      $(this).html(" "+value);
+    });
+
+  });
+
+  </script>
+</body>
+
+</html>

@@ -15,9 +15,8 @@ a {
   color: #323131;
 }
 
-
 #sidebar-wrapper {
-  z-index: 1;
+  z-index: 2;
   position: absolute;
   width: 0;
   height: 100%;
@@ -75,18 +74,28 @@ font-size: 14px;
 }
 
 #sidebar-wrapper {
+  position: fixed;
   -webkit-transition: width 0.5s;
   transition: width 0.5s;
 }
 
 #wrapper.menuDisplayed #sidebar-wrapper{
-  position: fixed;
   width: 250px;
+}
+
+#wrapper #sidebar-wrapper nav{
+  margin-top: 100%;
+}
+
+
+#wrapper #sidebar-wrapper nav.logged-1{
+  margin-top: 0;
 }
 
 #wrapper.menuDisplayed #page-content-wrapper{
   padding-left: 265px;
 }
+
 
 #sidebar-wrapper a {
   display: block;
@@ -102,6 +111,7 @@ font-size: 14px;
 }
 
 #menu-toggle {
+  z-index: 1;
   display: inline-block;
   cursor: pointer;
   position: -webkit-sticky; /* Safari */
