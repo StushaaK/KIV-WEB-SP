@@ -7,12 +7,16 @@
       <div class="container">
           <form class="form" action="/register" method="post" enctype="multipart/form-data" autocomplete="off">
             <h2>Vytvořit účet</h2>
-            <a href="/landing">< Zpět</a>
             <div class="alert alert-error"><?= $_SESSION['message'] ?></div>
-            <input type="text" placeholder="Uživatelské jméno" name="username" required>
-            <input type="email" placeholder="Email" name="email" required>
-            <input type="password" placeholder="Heslo" name="password" required>
-            <input type="password" placeholder="Heslo znovu" name="confirmpassword" required>
+            <a href="/landing">< Zpět</a>
+            <input type="text" class="inputBox" name="username" id="username" required>
+            <label for="username" class="inputBox">Uživatelské jméno</label>
+            <input type="email" class="inputBox" name="email" id="email" required>
+            <label for="email" class="inputBox">Email</label>
+            <input type="password" class="inputBox" name="password" id="password" required>
+            <label for="password" class="inputBox">Heslo</label>
+            <input type="password" class="inputBox" name="confirmpassword" id="confirmpassword" required>
+            <label for="confirmpassword" class="inputBox">Heslo znovu</label>
             <div class="avatar"><label>Profilový obrázek: </label>
               <input type="file" name="avatar" accept="image/*">
             </div>

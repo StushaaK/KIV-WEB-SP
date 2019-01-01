@@ -19,6 +19,48 @@ h2 {
   text-transform: uppercase;
 }
 
+input.inputBox {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #fff;
+  border-radius: 0%;
+  color: #fff;
+}
+
+input.inputBox:hover {
+  background: transparent;
+
+}
+
+input.inputBox:focus {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #7c1919;
+}
+
+label.inputBox {
+  position: relative;
+  top: -35px;
+  pointer-events: none;
+  transition: .5s;
+}
+
+input.inputBox:focus + label,
+input.inputBox:valid + label
+{
+   top: -65px;
+   font-size: 14px;
+   color: #7c1919;
+}
+
+#email {
+  margin-top: 50px;
+}
+
+input.inputBox: {
+  background: none;
+}
+
 ::-moz-selection {
   background: #7c1919;
 }
