@@ -4,10 +4,31 @@ class ProfileManager
 
   public function getAllCreatedArticles($userID)
   {
-    return Db::getAll('
+    $articlesArray = Db::getAll('
     SELECT * FROM conferention.articles WHERE id_user = ?
     ', array($userID));
+
+    foreach ($articlesArray as $key => $article) {
+
+      switch($article['state']) {
+      case 0:
+            $articlesArray[$key]['state'] = "čeká na vyjádření";
+            break;
+      case 1:
+            $articlesArray[$key]['state'] = "odmítnut";
+            break;
+      case 2:
+            $articlesArray[$key]['state'] = "v recenzním řízení";
+            break;
+      case 3:
+            $articlesArray[$key]['state'] = "přijat";
+            break;
+      default:
+          $articlesArray[$key]['state'] = "čeká na vyjádření";
+    }
   }
+  return $articlesArray;
+}
 
   public function getAllCreatedArticlesID($userID)
   {
@@ -23,18 +44,84 @@ class ProfileManager
     ', array($userID));
   }
 
-  public function getAllArticles()
+  public function getReviewers($reviewerStatus)
   {
     return Db::getAll('
+    SELECT users.id, users.username FROM conferention.users WHERE users.reviewer = ?;
+    ', array($reviewerStatus));
+  }
+
+  public function getAllArticles()
+  {
+    $articlesArray = Db::getAll('
     SELECT * FROM conferention.articles
     ', array());
+
+    foreach ($articlesArray as $key => $article) {
+
+      switch($article['state']) {
+      case 0:
+            $articlesArray[$key]['state'] = "čeká na vyjádření";
+            break;
+      case 1:
+            $articlesArray[$key]['state'] = "odmítnut";
+            break;
+      case 2:
+            $articlesArray[$key]['state'] = "v recenzním řízení";
+            break;
+      case 3:
+            $articlesArray[$key]['state'] = "přijat";
+            break;
+      default:
+          $articlesArray[$key]['state'] = "čeká na vyjádření";
+    }
+  }
+  return $articlesArray;
+  }
+
+  public function getArticlesAndReviews()
+  {
+    $articlesArray = Db::getAll('
+    SELECT * FROM conferention.articles
+    ', array());
+
+    foreach ($articlesArray as $key => $article) {
+
+      switch($article['state']) {
+      case 0:
+            $articlesArray[$key]['state'] = "čeká na vyjádření";
+            break;
+      case 1:
+            $articlesArray[$key]['state'] = "odmítnut";
+            break;
+      case 2:
+            $articlesArray[$key]['state'] = "v recenzním řízení";
+            break;
+      case 3:
+            $articlesArray[$key]['state'] = "přijat";
+            break;
+      default:
+          $articlesArray[$key]['state'] = "čeká na vyjádření";
+    }
+
+    $articlesArray[$key]['reviews'] = $this->getAllArticleReviews($article['id']);
+  }
+  return $articlesArray;
+  }
+
+  public function getAllArticleReviews($articleID)
+  {
+    return Db::getAll('
+      SELECT users.username, reviews.id, reviews.originality_score, reviews.theme_score, reviews.technical_score, reviews.language_score, reviews.recommendation
+      FROM conferention.reviews INNER JOIN conferention.users ON reviews.user_id = users.id WHERE reviews.article_id = ?
+    ', array($articleID));
   }
 
   public function getAllUserReviews($reviewerID)
   {
     return Db::getAll('
     SELECT articles.title, reviews.id, reviews.originality_score, reviews.theme_score, reviews.technical_score, reviews.language_score, reviews.recommendation, reviews.published
-     FROM conferention.reviews INNER JOIN conferention.articles ON reviews.articles_id = articles.id WHERE reviews.user_id = ?
+     FROM conferention.reviews INNER JOIN conferention.articles ON reviews.article_id = articles.id WHERE reviews.user_id = ?
     ', array($reviewerID));
   }
 
@@ -48,7 +135,7 @@ class ProfileManager
   public function getReview($reviewID) {
     return Db::getOneRow('
     SELECT articles.title, articles.pdf, reviews.id, reviews.originality_score, reviews.theme_score, reviews.technical_score, reviews.language_score, reviews.recommendation, reviews.comment
-     FROM conferention.reviews INNER JOIN conferention.articles ON reviews.articles_id = articles.id WHERE reviews.id = ?
+     FROM conferention.reviews INNER JOIN conferention.articles ON reviews.article_id = articles.id WHERE reviews.id = ?
     ', array($reviewID));
   }
 
@@ -59,10 +146,17 @@ class ProfileManager
     ', array($reviewerID));
   }
 
-  public function changePublishedStatusArticle($publishedID)
+  public function publishArticle($publishedID)
   {
     return Db::affectedRows('
-    UPDATE conferention.articles SET published = (published ^ 1) WHERE id = ?
+    UPDATE conferention.articles SET state = 3 WHERE id = ?
+    ', array($publishedID));
+  }
+
+  public function rejectArticle($publishedID)
+  {
+    return Db::affectedRows('
+    UPDATE conferention.articles SET state = 1 WHERE id = ?
     ', array($publishedID));
   }
 
@@ -71,6 +165,12 @@ class ProfileManager
     return Db::affectedRows('
     UPDATE conferention.reviews SET published = (published ^ 1) WHERE id = ?
     ', array($publishedID));
+  }
+
+  public function assignReview($userID, $articleID) {
+    Db::affectedRows('
+    INSERT INTO conferention.reviews (user_id, article_id, originality_score, theme_score, technical_score, language_score, recommendation) VALUES (?, ?, ?, ?, ?, ?, ?)
+    ', array($userID, $articleID, 0, 0, 0, 0, 0));
   }
 
   public function changeReview($reviewArray)
@@ -97,11 +197,9 @@ class ProfileManager
   public function insertArticle($articleArray)
   {
     Db::insertRow('
-        INSERT INTO conferention.articles (id_user, title, authors, abstract, pdf, published) VALUES (?, ?, ?, ?, ?, ?)
+        INSERT INTO conferention.articles (id_user, title, authors, abstract, pdf, state) VALUES (?, ?, ?, ?, ?, ?)
       ', $articleArray);
   }
-
-
 
   public function deleteAccount($userID)
   {

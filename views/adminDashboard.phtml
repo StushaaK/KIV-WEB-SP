@@ -7,6 +7,8 @@
 
 <body>
   <div class="container animated fadeIn">
+
+    <!-- PROFIL -->
     <div class="avatar">
       <img src="<?= $_SESSION['avatar'] ?>" class="avatar" alt="avatar">
       <h4>Vítejte zpět:</h4>
@@ -19,78 +21,165 @@
       <hr>
     </div>
     <div>
-      <div class="alert alert-error"><?= $_SESSION['message'] ?></div>
-      <div class="legend">
-        <h6>Legenda</h6>
-        <i class="fa fa-fw fa-book-reader"></i> Přidělit/Odstranit uživateli status recenzenta<br>
-        <i class="fa fa-fw fa-upload"></i> Změnit status publikace článku<br>
-        <i class="fa fa-fw fa-file-download"></i> Stáhnout pdf dokument<br>
-        <i class="fa fa-fw fa-trash-alt"></i> Odstranit příspěvek/uživatele<br><br>
-      </div>
-      <table class="table-responsive-sm table table-striped">
-        <thead class="thead-dark">
-        <th class="heading" colspan="5"><h4>Seznam uživatelů</h4></th>
-        <tr>
-          <th>Avatar</th>
-          <th>Uživatelské jméno</th>
-          <th>Email</th>
-          <th>Recenzent</th>
-          <th>Akce</th>
-        </tr>
-      </thead>
-        <tr>
-          <?php foreach ($users as $user) : ?>
-          <td><img src="<?= $user['avatar'] ?>"></img></td>
-          <td><?= $user['username'] ?></td>
-          <td><?= $user['email'] ?></td>
-          <td><?= $user['reviewer'] ?></td>
-          <td>
-            <form action="/profile" method="post">
-              <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
-              <button type = "submit" name="promote" title="Přidělit/Odstranit uživateli status recenzenta"><i class="fa fa-fw fa-book-reader"></i></button>
-              <button type = "submit" name="deleteUser" title="Odstranit uživatele"><i class="fa fa-fw fa-trash-alt"></i></button>
-            </form>
-          </td>
-        </tr>
-      <?php endforeach ?>
-      </table>
-
-      <table class="table <?= $showArticles ?> table-responsive-sm">
-        <thead class="thead-dark">
-        <th class="heading" colspan="5"><h4>Seznam příspěvků</h4></th>
-        <tr>
-          <th>Název</th>
-          <th>Autoři</th>
-          <th>Recenze</th>
-          <th>Publikováno</th>
-          <th>Akce</th>
-        </tr>
-        </thead>
-        <tr>
-          <?php foreach ($articles as $article) : ?>
-          <td><?= $article['title'] ?></td>
-          <td><?= $article['authors'] ?></td>
-          <td></td>
-          <td><?= $article['published'] ?></td>
-          <td>
-            <form action="/profile" method="post">
-              <input type="hidden" name="article_id" value="<?= $article['id'] ?>">
-              <button type = "submit" name="publish" title="Změnit status publikace článku"><i class="fa fa-fw fa-upload"></i></button>
-              <a href="<?= $article['pdf'] ?>" title="Stáhnout pdf dokument"><i class="fa fa-fw fa-file-download"></i></a>
-              <button type = "submit" name="deleteArticle" title="Odstranit příspěvek"><i class="fa fa-fw fa-trash-alt"></i></button>
-            </form>
-          </td>
-        </tr>
-      <?php endforeach ?>
-      </table>
-      <hr>
+      <!--  MENU  -->
       <form action="/profile" method="post">
         <a href=/profile?newArticle class="btn btn-success">Vložit článek</a>
         <button class="btn btn-primary" type="submit" name="logout">Odhlásit se</button>
         <button class="btn btn-danger" type="submit" name="deleteACC">Zrušit účet</button>
       </form>
+      <hr>
+
+      <!-- INFO BOX -->
+      <div class="alert alert-success"><?= $_SESSION['message'] ?></div>
+
+      <!-- LEGENDA -->
+      <div class="legend">
+        <h6>Legenda</h6>
+        <i class="fa fa-fw fa-book-reader"></i> Přidělit/Odstranit uživateli status recenzenta<br>
+        <i class="fa fa-fw fa-check"></i> Přijmout článek<br>
+        <i class="fa fa-fw fa-times"></i> Zamítnout článek<br>
+        <i class="fa fa-fw fa-file-download"></i> Stáhnout pdf dokument<br>
+        <i class="fa fa-fw fa-trash-alt"></i> Odstranit příspěvek/uživatele<br><br>
+      </div>
+
+      <!-- TABULKY -->
+      <table class="table table-condensed table-responsive-sm">
+        <thead class="thead-dark">
+          <th class="heading" colspan="5">
+            <h4>Seznam uživatelů</h4>
+          </th>
+          <tr>
+            <th>Avatar</th>
+            <th>Uživatelské jméno</th>
+            <th>Email</th>
+            <th>Recenzent</th>
+            <th>Akce</th>
+          </tr>
+        </thead>
+        <tr>
+          <?php foreach ($users as $user) : ?>
+          <td><img src="<?= $user['avatar'] ?>"></img></td>
+          <td>
+            <?= $user['username'] ?>
+          </td>
+          <td>
+            <?= $user['email'] ?>
+          </td>
+          <td>
+            <?= $user['reviewer'] ?>
+          </td>
+          <td>
+            <form action="/profile" method="post">
+              <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
+              <button type="submit" name="promote" title="Přidělit/Odstranit uživateli status recenzenta"><i class="fa fa-fw fa-book-reader"></i></button>
+              <button type="submit" name="deleteUser" title="Odstranit uživatele"><i class="fa fa-fw fa-trash-alt"></i></button>
+            </form>
+          </td>
+        </tr>
+        <?php endforeach ?>
+      </table>
+
+      <table class="table <?= $showArticles ?> table-responsive-sm">
+        <thead class="thead-dark">
+          <th class="heading" colspan="12">
+            <h4>Seznam příspěvků a recenzí</h4>
+          </th>
+          <tr>
+            <th>Název</th>
+            <th>Autoři</th>
+            <th>Stav</th>
+            <th>Akce</th>
+          </tr>
+        </thead>
+        <?php foreach ($articles as $key => $article) : ?>
+        <tr data-toggle="collapse" data-target="#demo<?= $key ?>" class="accordion-toggle">
+          <td>
+            <?= $article['title'] ?>
+          </td>
+          <td>
+            <?= $article['authors'] ?>
+          </td>
+          <td>
+            <?= $article['state'] ?>
+          </td>
+          <td >
+            <form action="/profile" method="post">
+              <input type="hidden" name="article_id" value="<?= $article['id'] ?>">
+              <button type="submit" name="publish" title="Přijmout článek"><i class="fa fa-fw fa-check"></i></button>
+              <button type="submit" name="reject" title="Zamítnout článek"><i class="fa fa-fw fa-times"></i></button>
+              <a href="<?= $article['pdf'] ?>" title="Stáhnout pdf dokument"><i class="fa fa-fw fa-file-download"></i></a>
+              <button type="submit" name="deleteArticle" title="Odstranit příspěvek"><i class="fa fa-fw fa-trash-alt"></i></button>
+            </form>
+          </td>
+        </tr>
+        <tr >
+           <td colspan="12" class="hiddenRow">
+            <div class="accordian-body collapse" id="demo<?= $key ?>">
+               <table class="table">
+                 <thead>
+                   <th>Recenzent</th>
+                   <th>Orig.</th>
+                   <th>Téma</th>
+                   <th>Tech.</th>
+                   <th>Jaz.</th>
+                   <th>Dop.</th>
+                   <th>Celkem</th>
+                   <th>Akce</th>
+                 </thead>
+                 <tbody>
+                   <?php foreach ($article['reviews'] as $review): ?>
+                     <tr colspan="12">
+                       <td><?= $review['username'] ?></td>
+                       <td><?= $review['originality_score'] ?></td>
+                       <td><?= $review['theme_score'] ?></td>
+                       <td><?= $review['technical_score'] ?></td>
+                       <td><?= $review['language_score'] ?></td>
+                       <td><?= $review['recommendation'] ?></td>
+                       <td>něco</td>
+                       <td>
+                         <form action="/profile" method="post">
+                         <input type="hidden" name="review_id" value="<?= $review['id'] ?>">
+                         <button type="submit" name="deleteReview" title="Odstranit recenzi"><i class="fa fa-fw fa-trash-alt"></i></button>
+                         </form>
+                       </td>
+                     </tr>
+                   <?php endforeach; ?>
+                   <tr>
+                     <td colspan="6">
+                       <form action="/profile" method="post">
+                        <select name="reviewer_id">
+                          <?php foreach ($reviewers as $reviewer): ?>
+                            <option value="<?= $reviewer['id'] ?>"><?= $reviewer['username'] ?></option>
+                          <?php endforeach; ?>
+                        </select>
+                     </td>
+                     <td colspan="6">
+                         <input type="hidden" name="article_id" value="<?= $article['id']?>">
+                         <button type="submit" name="assignReview" title="Přidělit recenzi" class="btn-sm"><i class="fa fa-plus"></i> Přidělit recenzi</button>
+                       </form>
+                     </td>
+                   </tr>
+                 </tbody>
+               </table>
+             </div>
+           </td>
+        </tr>
+        <?php endforeach ?>
+      </table>
     </div>
+
   </div>
+
+  <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+
+  <script type="text/javascript">
+  $('.accordian-body').on('show.bs.collapse', function () {
+  $(this).closest("table")
+      .find(".collapse.in")
+      .not(this)
+      .collapse('toggle')
+})
+  </script>
 </body>
 
 </html>

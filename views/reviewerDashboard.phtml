@@ -7,6 +7,8 @@
 
 <body>
   <div class="container animated fadeIn">
+
+    <!-- PROFIL -->
     <div class="avatar">
       <img src="<?= $_SESSION['avatar'] ?>" class="avatar" alt="avatar">
       <h4>Vítejte zpět:</h4>
@@ -19,7 +21,19 @@
       <hr>
     </div>
     <div>
-      <div class="alert alert-error"><?= $_SESSION['message'] ?></div>
+
+      <!-- MENU -->
+      <form action="/profile" method="post">
+        <a href=/profile?newArticle class="btn btn-success">Vložit článek</a>
+        <button class="btn btn-primary" type="submit" name="logout">Odhlásit se</button>
+        <button class="btn btn-danger" type="submit" name="deleteACC">Zrušit účet</button>
+      </form>
+      <hr>
+
+      <!-- INFO BOX -->
+      <div class="alert alert-success"><?= $_SESSION['message'] ?></div>
+
+      <!-- LEGENDA -->
       <div class="legend">
         <h6>Legenda</h6>
         <i class="fa fa-fw fa-file-download"></i> Stáhnout pdf dokument<br>
@@ -27,61 +41,75 @@
         <i class="fa fa-fw fa-edit"></i> Editovat recenzi<br>
         <i class="fa fa-fw fa-trash-alt"></i> Odstranit příspěvek/recenzi<br><br>
       </div>
+
+      <!-- TABULKY -->
       <table class="table <?= $showArticles ?> table-responsive-sm">
         <thead class="thead-dark">
-        <th class="heading" colspan="3"><h4>Seznam příspěvků</h4></th>
-        <tr>
-          <th>Název</th>
-          <th>Autoři</th>
-          <th>Akce</th>
-        </tr>
+          <th class="heading" colspan="4">
+            <h4>Seznam příspěvků</h4>
+          </th>
+          <tr>
+            <th>Název</th>
+            <th>Autoři</th>
+            <th>Stav</th>
+            <th>Akce</th>
+          </tr>
         </thead>
         <tr>
           <?php foreach ($articles as $article) : ?>
-          <td><?= $article['title'] ?></td>
-          <td><?= $article['authors'] ?></td>
           <td>
-            <form action="/profile" method="post">
-            <input type="hidden" name="article_id" value="<?= $article['id'] ?>">
-            <a href="<?= $article['pdf'] ?>" title="Stáhnout pdf dokument"><i class="fa fa-fw fa-file-download"></i></a>
-            <button type = "submit" name="deleteArticle" title="Odstranit příspěvek"><i class="fa fa-fw fa-trash-alt"></i></button>
-          </form>
+            <?= $article['title'] ?>
           </td>
-        </tr>
-      <?php endforeach ?>
-      </table>
-      <table class="table <?= $showReviews?> table-responsive-sm">
-        <thead class="thead-dark">
-        <th class="heading" colspan="4"><h4>Seznam recenzí</h4></th>
-        <tr>
-          <th>Název</th>
-          <th>Ohodnocení</th>
-          <th>Publikováno</th>
-          <th>Akce</th>
-        </tr>
-      </thead>
-        <tr>
-          <?php foreach ($reviews as $review) : ?>
-          <td><?= $review['title'] ?></td>
-          <td><?= $review['average'] ?></td>
-          <td><?= $review['published'] ?></td>
+          <td>
+            <?= $article['authors'] ?>
+          </td>
+          <td>
+            <?= $article['state'] ?>
+          </td>
           <td>
             <form action="/profile" method="post">
-              <input type="hidden" name="review_id" value="<?= $review['id'] ?>">
-              <button type = "submit" name="publish" title="Změnit status publikace recenze"><i class="fa fa-fw fa-upload"></i></button>
-              <button type = "submit" name="editReview" title="Editovat recenzi"><i class="fa fa-fw fa-edit"></i></button>
-              <button type = "submit" name="deleteReview" title="Odstranit recenzi"><i class="fa fa-fw fa-trash-alt"></i></button>
+              <input type="hidden" name="article_id" value="<?= $article['id'] ?>">
+              <a href="<?= $article['pdf'] ?>" title="Stáhnout pdf dokument"><i class="fa fa-fw fa-file-download"></i></a>
+              <button type="submit" name="deleteArticle" title="Odstranit příspěvek"><i class="fa fa-fw fa-trash-alt"></i></button>
             </form>
           </td>
         </tr>
-      <?php endforeach ?>
+        <?php endforeach ?>
       </table>
-      <hr>
-      <form action="/profile" method="post">
-        <a href=/profile?newArticle class="btn btn-success">Vložit článek</a>
-        <button class="btn btn-primary" type="submit" name="logout">Odhlásit se</button>
-        <button class="btn btn-danger" type="submit" name="deleteACC">Zrušit účet</button>
-      </form>
+      <table class="table <?= $showReviews?> table-responsive-sm">
+        <thead class="thead-dark">
+          <th class="heading" colspan="4">
+            <h4>Seznam recenzí</h4>
+          </th>
+          <tr>
+            <th>Název</th>
+            <th>Ohodnocení</th>
+            <th>Publikováno</th>
+            <th>Akce</th>
+          </tr>
+        </thead>
+        <tr>
+          <?php foreach ($reviews as $review) : ?>
+          <td>
+            <?= $review['title'] ?>
+          </td>
+          <td>
+            <?= $review['average'] ?>
+          </td>
+          <td>
+            <?= $review['published'] ?>
+          </td>
+          <td>
+            <form action="/profile" method="post">
+              <input type="hidden" name="review_id" value="<?= $review['id'] ?>">
+              <button type="submit" name="publish" title="Změnit status publikace recenze"><i class="fa fa-fw fa-upload"></i></button>
+              <button type="submit" name="editReview" title="Editovat recenzi"><i class="fa fa-fw fa-edit"></i></button>
+              <button type="submit" name="deleteReview" title="Odstranit recenzi"><i class="fa fa-fw fa-trash-alt"></i></button>
+            </form>
+          </td>
+        </tr>
+        <?php endforeach ?>
+      </table>
     </div>
   </div>
 </body>

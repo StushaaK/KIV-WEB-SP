@@ -13,7 +13,6 @@
         <span>Stáhnout příspěvek:<a href="<?= $review['pdf'] ?>" target="_blank"><i class="fa fa-fw fa-file-download"></i></a></span><br>
         <span class="tip">Ohodnoť bodově jednotlivé prvky článku (0 - nejhorší | 5 - nejlepší)</span>
       </div>
-      <div class="alert alert-error"><?= $_SESSION['message'] ?></div>
       <label for="originality">Originalita: </label><input type="range" name="originality" value="<?= $review['originality_score'] ?>" min="0" max="5" step="0.5" id="originality"><output></output><br>
       <label for="theme">Téma: </label> <input type="range" name="theme" value="<?= $review['theme_score'] ?>" min="0" max="5" step="0.5" id="theme"><output></output><br>
       <label for="technical">Technická kvalita: </label> <input type="range" name="technical" value="<?= $review['technical_score'] ?>" min="0" max="5" step="0.5" id="technical"><output></output><br>

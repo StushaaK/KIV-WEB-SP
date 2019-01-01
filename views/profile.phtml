@@ -7,6 +7,8 @@
 
 <body>
   <div class="container animated fadeIn">
+
+    <!-- PROFIL -->
     <div class="avatar">
       <img src="<?= $_SESSION['avatar'] ?>" class="avatar" alt="avatar">
       <h4>Vítejte zpět:</h4>
@@ -19,41 +21,58 @@
       <hr>
     </div>
     <div>
-      <div class="alert alert-error"><?= $_SESSION['message'] ?></div>
-      <div class="legend">
-        <h6>Legenda</h6>
-        <i class="fa fa-fw fa-file-download"></i> Stáhnout pdf dokument<br>
-        <i class="fa fa-fw fa-trash-alt"></i> Odstranit příspěvek<br><br>
-      </div>
-      <table class="table <?= $showArticles ?> table-responsive-sm">
-        <thead class="thead-dark">
-        <th class="heading" colspan="3"><h4>Seznam příspěvků</h4></th>
-        <tr>
-          <th>Název</th>
-          <th>Autoři</th>
-          <th>Akce</th>
-        </tr>
-      </thead>
-        <tr>
-          <?php foreach ($articles as $article) : ?>
-          <td><?= $article['title'] ?></td>
-          <td><?= $article['authors'] ?></td>
-          <td>
-            <form action="/profile" method="post">
-            <input type="hidden" name="article_id" value="<?= $article['id'] ?>">
-            <a href="<?= $article['pdf'] ?>" title="Stáhnout pdf dokument"><i class="fa fa-fw fa-file-download"></i></a>
-            <button type = "submit" name="deleteArticle" title="Odstranit příspěvek"><i class="fa fa-fw fa-trash-alt"></i></button>
-          </form>
-          </td>
-        </tr>
-      <?php endforeach ?>
-      </table>
-      <hr>
+      <!--  MENU  -->
       <form action="/profile" method="post">
         <a href=/profile?newArticle class="btn btn-success">Vložit článek</a>
         <button class="btn btn-primary" type="submit" name="logout">Odhlásit se</button>
         <button class="btn btn-danger" type="submit" name="deleteACC">Zrušit účet</button>
       </form>
+      <hr>
+
+      <!-- INFO BOX -->
+      <div class="alert alert-success"><?= $_SESSION['message'] ?></div>
+
+      <!-- LEGENDA -->
+      <div class="legend">
+        <h6>Legenda</h6>
+        <i class="fa fa-fw fa-file-download"></i> Stáhnout pdf dokument<br>
+        <i class="fa fa-fw fa-trash-alt"></i> Odstranit příspěvek<br><br>
+      </div>
+
+      <!-- TABULKY -->
+      <table class="table <?= $showArticles ?> table-responsive-sm">
+        <thead class="thead-dark">
+          <th class="heading" colspan="4">
+            <h4>Seznam příspěvků</h4>
+          </th>
+          <tr>
+            <th>Název</th>
+            <th>Autoři</th>
+            <th>Stav</th>
+            <th>Akce</th>
+          </tr>
+        </thead>
+        <tr>
+          <?php foreach ($articles as $article) : ?>
+          <td>
+            <?= $article['title'] ?>
+          </td>
+          <td>
+            <?= $article['authors'] ?>
+          </td>
+          <td>
+            <?= $article['state'] ?>
+          </td>
+          <td>
+            <form action="/profile" method="post">
+              <input type="hidden" name="article_id" value="<?= $article['id'] ?>">
+              <a href="<?= $article['pdf'] ?>" title="Stáhnout pdf dokument"><i class="fa fa-fw fa-file-download"></i></a>
+              <button type="submit" name="deleteArticle" title="Odstranit příspěvek"><i class="fa fa-fw fa-trash-alt"></i></button>
+            </form>
+          </td>
+        </tr>
+        <?php endforeach ?>
+      </table>
     </div>
   </div>
 </body>

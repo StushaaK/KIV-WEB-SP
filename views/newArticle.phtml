@@ -1,20 +1,23 @@
 <html>
-  <head>
 
-  </head>
-  <body>
-      <div class="container">
-          <form class="form" action="/profile" id="newArticleForm" method="post" enctype="multipart/form-data" autocomplete="off">
-            <h2>Přidat příspěvek</h2>
-            <div class="alert alert-error"><?= $_SESSION['message'] ?></div>
-            <input type="text" placeholder="Název příspěvku" name="title" required>
-            <input type="text" placeholder="Autoři" name="authors" required>
-            <textarea name="abstract" form="newArticleForm">Stručně popište rozebíraný problém... </textarea>
-            <div class="pdf"><label>PDF Soubor: </label>
-              <input type="file" name="pdf" accept=".pdf" required>
-            </div>
-            <input type="submit" value="Vložit" name="addArticle" class="btn btn-primary">
-          </form>
+<head>
+
+</head>
+
+<body>
+  <div class="container">
+    <form class="form" action="/profile" id="newArticleForm" method="post" enctype="multipart/form-data" autocomplete="off">
+      <h2>Přidat příspěvek</h2>
+      <a href="/profile">< Zpět</a>
+      <input type="text" placeholder="Název příspěvku" name="title" required>
+      <input type="text" placeholder="Autoři" name="authors" required>
+      <textarea name="abstract" form="newArticleForm" placeholder="Stručně popište rozebíraný problém..."></textarea>
+      <div class="pdf"><label>PDF Soubor: </label>
+        <input type="file" name="pdf" accept=".pdf" required>
       </div>
-  </body>
+      <input type="submit" value="Vložit" name="addArticle" class="btn btn-primary">
+    </form>
+  </div>
+</body>
+
 </html>

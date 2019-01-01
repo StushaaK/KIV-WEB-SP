@@ -17,11 +17,13 @@ class ProfileControler extends Controler {
 
     $this->data['showArticles']="table-striped";
 
-
+    // Administrátor
     if($_SESSION['accountType']=="administrátor") {
       $profileManager = new ProfileManager();
       $this->data['users']=$profileManager->getAllUsers($_SESSION['userID']);
-      $this->data['articles']=$profileManager->getAllArticles();
+      $this->data['articles']=$profileManager->getArticlesAndReviews();
+      $this->data['reviewers']=$profileManager->getReviewers(1);
+
 
       //Vypni zobrazení prázdných tabulek
       if (empty($this->data['articles'])) $this->data['showArticles']="d-none";
@@ -41,17 +43,45 @@ class ProfileControler extends Controler {
       }
 
       if (isset($_POST['publish'])) {
-        $_SESSION['message'] = "Stav publikování příspěvku byl změněn";
-        $profileManager->changePublishedStatusArticle($_POST['article_id']);
+        $_SESSION['message'] = "Přípěvek byl publikován";
+        $profileManager->publishArticle($_POST['article_id']);
 
 
         $this->redirect('profile');
       }
 
+      if (isset($_POST['reject'])) {
+        $_SESSION['message'] = "Přípěvek byl zamítnut";
+        $profileManager->rejectArticle($_POST['article_id']);
+
+
+        $this->redirect('profile');
+      }
+
+      if (isset($_POST['assignReview'])) {
+        $_SESSION['message'] = "Uživateli byl přidělen příspěvek k posouzení";
+        $profileManager->assignReview($_POST['reviewer_id'], $_POST['article_id']);
+
+
+        $this->redirect('profile');
+      }
+
+      if (isset($_POST['deleteReview'])) {
+        $_SESSION['message'] = "Hodnocení smazáno";
+        $profileManager->deleteReview($_POST['review_id']);
+
+
+        $this->redirect('profile');
+      }
+
+
+
       $this->view = 'adminDashboard';
 
     }
 
+
+    // Recenzent
     else if($_SESSION['accountType']=="recenzent") {
       $profileManager = new ProfileManager();
       $this->data['articles']=$profileManager->getAllCreatedArticles($_SESSION['userID']);
@@ -157,7 +187,7 @@ class ProfileControler extends Controler {
       }
 
       else {
-         $_SESSION['message'] = 'Nepodařilo se vloži PDF soubor!';
+         $_SESSION['message'] = 'Nepodařilo se vložit PDF soubor!';
       }
 
 

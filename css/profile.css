@@ -43,3 +43,19 @@ table thead.thead-dark th.heading {
   text-align: center;
   text-transform: uppercase;
 }
+
+tr.accordion-toggle {
+    cursor: pointer;
+}
+
+table tr.accordion-toggle:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+.hiddenRow {
+    padding: 0 4px !important;
+    font-size: 13px;
+}
+
+.table .table {
+  color: black;
+}
