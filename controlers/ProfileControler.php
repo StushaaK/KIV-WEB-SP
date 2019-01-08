@@ -85,15 +85,7 @@ class ProfileControler extends Controler {
     else if($_SESSION['accountType']=="recenzent") {
       $profileManager = new ProfileManager();
       $this->data['articles']=$profileManager->getAllCreatedArticles($_SESSION['userID']);
-      $reviews=$profileManager->getAllUserReviews($_SESSION['userID']);
-
-
-      //vypočtení průměru
-      foreach ($reviews as $key => $review) {
-        $reviews[$key]['average'] = ($review['originality_score'] + $review['theme_score'] + $review['technical_score'] + $review['language_score'] + $review['recommendation']) / 5.0;
-      }
-
-      $this->data['reviews'] = $reviews;
+      $this->data['reviews']=$profileManager->getAllUserReviews($_SESSION['userID']);
 
       //Vypni zobrazení prázdných tabulek
       $this->data['showReviews']="table-striped";

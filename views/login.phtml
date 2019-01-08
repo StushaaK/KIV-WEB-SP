@@ -1,9 +1,7 @@
-<html lang="en">
-   <head>
      <link rel="stylesheet" href="css/login.css">
-   </head>
-   <body>
+
      <div class="container">
+       <div class="col-xl-4">
        <form class="form-signin" method="post" action="/login">
          <h2 class="form-signin-heading">Vítejte zpátky</h2>
          <div class="alert alert-error"><?= $_SESSION['message'] ?></div>
@@ -16,5 +14,4 @@
          <button class="btn btn-lg btn-primary btn-block" type="submit">Přihlásit se</button>
        </form>
      </div>
-   </body>
- </html>
+     </div>

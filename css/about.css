@@ -1,0 +1,46 @@
+.title {
+  height: 500px;
+  width: 100%;
+  background: url("../img/conference.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  position: relative;
+  top: -72px;
+}
+
+.heading {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  text-align: center;
+}
+
+.title h1 {
+  color: white;
+ display: inline-block;
+ background-color: rgba(17, 17, 17, 0.9);
+ letter-spacing: 8px;
+ text-transform: uppercase;
+ font-weight: bold;
+ padding: 10px;
+}
+
+.row {
+  padding-bottom: 20px;
+}
+
+h6 {
+  font-size: 18px;
+  color: #111;
+  text-align: center;
+}
+
+@media (max-width: 800px) {
+  h1 {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 20px;
+  }
+}

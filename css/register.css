@@ -3,13 +3,6 @@
   padding:0;
 }
 
-body {
-  color: #fff;
-  background-color:#e74c3c;
-  font-family: 'Open Sans', sans-serif;
-/*  background:url('../img/bg.jpg') #0f2439 no-repeat center top !important; */
-}
-
 h2 {
   font-size: 2em;
   font-weight: normal;
@@ -49,8 +42,12 @@ input.inputBox:focus + label,
 input.inputBox:valid + label
 {
    top: -65px;
-   font-size: 14px;
    color: #7c1919;
+}
+
+.col-xl-5
+{
+  margin: 0 auto;
 }
 
 #username {

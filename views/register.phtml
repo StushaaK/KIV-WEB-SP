@@ -1,10 +1,7 @@
-<html>
-  <head>
     <link rel="stylesheet" href="css/register.css">
-  </head>
-  <body>
 
       <div class="container">
+        <div class="col-xl-5">
           <form class="form" action="/register" method="post" enctype="multipart/form-data" autocomplete="off">
             <h2>Vytvořit účet</h2>
             <div class="alert alert-error"><?= $_SESSION['message'] ?></div>
@@ -23,6 +20,5 @@
             Máte již účet? <a href="/login">Přihlásit</a>
             <input type="submit" value="Registrovat" name="register" class="btn btn-block btn-primary">
           </form>
+          </div>
       </div>
-  </body>
-</html>

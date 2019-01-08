@@ -1,11 +1,6 @@
-<html>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+<link rel="stylesheet" href="css/profile.css">
 
-<head>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
-  <link rel="stylesheet" href="css/profile.css">
-</head>
-
-<body>
   <div class="container animated fadeIn">
 
     <!-- PROFIL -->
@@ -128,14 +123,14 @@
                  </thead>
                  <tbody>
                    <?php foreach ($article['reviews'] as $review): ?>
-                     <tr colspan="12">
+                     <tr colspan="12" class="published-<?= $review['published'] ?>">
                        <td><?= $review['username'] ?></td>
                        <td><?= $review['originality_score'] ?></td>
                        <td><?= $review['theme_score'] ?></td>
                        <td><?= $review['technical_score'] ?></td>
                        <td><?= $review['language_score'] ?></td>
                        <td><?= $review['recommendation'] ?></td>
-                       <td>něco</td>
+                       <td><?= $review['average'] ?></td>
                        <td>
                          <form action="/profile" method="post">
                          <input type="hidden" name="review_id" value="<?= $review['id'] ?>">
@@ -178,8 +173,11 @@
       .find(".collapse.in")
       .not(this)
       .collapse('toggle')
-})
-  </script>
-</body>
+});
 
-</html>
+$('.published-0').each(function(){
+ $(this).find("td").not(':eq(0), :eq(7)').hide();
+ $(this).find("td").eq(0).after('<td colspan="6">Uživatel recenzi doposud nepublikoval</td>');
+});
+
+  </script>

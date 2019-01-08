@@ -112,7 +112,7 @@ class ProfileManager
   public function getAllArticleReviews($articleID)
   {
     return Db::getAll('
-      SELECT users.username, reviews.id, reviews.originality_score, reviews.theme_score, reviews.technical_score, reviews.language_score, reviews.recommendation
+      SELECT users.username, reviews.id, reviews.originality_score, reviews.theme_score, reviews.technical_score, reviews.language_score, reviews.recommendation, reviews.average, reviews.published
       FROM conferention.reviews INNER JOIN conferention.users ON reviews.user_id = users.id WHERE reviews.article_id = ?
     ', array($articleID));
   }
@@ -120,7 +120,7 @@ class ProfileManager
   public function getAllUserReviews($reviewerID)
   {
     return Db::getAll('
-    SELECT articles.title, reviews.id, reviews.originality_score, reviews.theme_score, reviews.technical_score, reviews.language_score, reviews.recommendation, reviews.published
+    SELECT articles.title, reviews.id, reviews.originality_score, reviews.theme_score, reviews.technical_score, reviews.language_score, reviews.recommendation, reviews.average, reviews.published
      FROM conferention.reviews INNER JOIN conferention.articles ON reviews.article_id = articles.id WHERE reviews.user_id = ?
     ', array($reviewerID));
   }
@@ -160,6 +160,13 @@ class ProfileManager
     ', array($publishedID));
   }
 
+  public function articleReviewed($publishedID)
+  {
+    return Db::affectedRows('
+    UPDATE conferention.articles SET state = 2 WHERE id = ?
+    ', array($publishedID));
+  }
+
   public function changePublishedStatusReview($publishedID)
   {
     return Db::affectedRows('
@@ -169,8 +176,10 @@ class ProfileManager
 
   public function assignReview($userID, $articleID) {
     Db::affectedRows('
-    INSERT INTO conferention.reviews (user_id, article_id, originality_score, theme_score, technical_score, language_score, recommendation) VALUES (?, ?, ?, ?, ?, ?, ?)
-    ', array($userID, $articleID, 0, 0, 0, 0, 0));
+    INSERT INTO conferention.reviews (user_id, article_id) VALUES (?, ?)
+    ', array($userID, $articleID));
+
+    $this->articleReviewed($articleID);
   }
 
   public function changeReview($reviewArray)

@@ -3,13 +3,17 @@ body, html {
   width: 100%;
   margin: 0;
   padding: 0;
-  background: #e74c3c;
+  background: #ee3e42;
   font-family: 'Roboto', sans-serif;
   color: white;
 }
 
 a {
   color: #323131;
+}
+
+h1 {
+  color: #111;
 }
 
 #sidebar-wrapper {
@@ -19,8 +23,7 @@ a {
   height: 100%;
   overflow-x: hidden;
   white-space: nowrap;
-  background: #757575;
-  opacity: 0.9;
+  background: #2a2a2a;
 
   -webkit-box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75);
   -moz-box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75);
@@ -37,7 +40,7 @@ a {
 }
 
 #sidebar-wrapper .profile h4 a{
-  color: #323131;
+  color: rgba(255, 255, 255, 0.3);
   text-align: center;
   text-transform: uppercase;
   font-size: 20px;
@@ -46,10 +49,10 @@ a {
 
 #sidebar-wrapper .profile h6 {
   margin-top: -15px;
-  color: rgba(0, 0, 0, 0.5);
+  color: rgba(0, 0, 0, 0.6);
   text-align: center;
   text-transform: uppercase;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 #sidebar-wrapper .profile a {
@@ -65,9 +68,14 @@ font-size: 14px;
 #page-content-wrapper {
   width: 100%;
   position: absolute;
-  padding: 15px;
   -webkit-transition: padding-left 0.5s;
   transition: padding-left 0.5s;
+}
+
+.container-fluid {
+  padding-left: 0;
+  padding-right: 0;
+  width: 100%;
 }
 
 #sidebar-wrapper {
@@ -90,7 +98,7 @@ font-size: 14px;
 }
 
 #wrapper.menuDisplayed #page-content-wrapper{
-  padding-left: 265px;
+  padding-left: 250px;
 }
 
 
@@ -114,6 +122,7 @@ font-size: 14px;
   position: -webkit-sticky; /* Safari */
   position: sticky;
   top: 15px;
+  padding-left: 15px;
   padding-bottom: 10px;
 }
 
@@ -146,6 +155,10 @@ font-size: 14px;
   padding-bottom: 10px;
 }
 
+.row {
+  margin: 0 auto;
+}
+
 @media (max-width: 800px) {
 
   #wrapper.menuDisplayed #sidebar-wrapper{
@@ -153,8 +166,9 @@ font-size: 14px;
   }
 
   #wrapper.menuDisplayed #page-content-wrapper{
-    padding-left: 115px;
+    padding-left: 100px;
   }
+
 
   #sidebar-wrapper .profile img {
     border-radius: 50%;
@@ -183,6 +197,7 @@ font-size: 14px;
   #sidebar-wrapper .profile h4 a{
     font-size: 15px;
   }
+
 
 }
 
@@ -217,10 +232,10 @@ font-size: 14px;
 }
 
 ::-moz-selection {
-  background: #7c1919;
+  background: rgba(0, 0, 0, 0.2);
 }
 ::selection {
-  background: #7c1919;
+  background: rgba(0, 0, 0, 0.2);
 }
 
 input::-moz-selection {
