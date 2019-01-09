@@ -6,6 +6,7 @@ body, html {
   background: #ee3e42;
   font-family: 'Roboto', sans-serif;
   color: white;
+  overflow-wrap: break-word;
 }
 
 a {
@@ -72,12 +73,6 @@ font-size: 14px;
   transition: padding-left 0.5s;
 }
 
-.container-fluid {
-  padding-left: 0;
-  padding-right: 0;
-  width: 100%;
-}
-
 #sidebar-wrapper {
   position: fixed;
   -webkit-transition: width 0.5s;
@@ -124,6 +119,16 @@ font-size: 14px;
   top: 15px;
   padding-left: 15px;
   padding-bottom: 10px;
+}
+
+.container-fluid {
+  padding-left: 0;
+  padding-right: 0;
+  width: 100%;
+}
+
+.table {
+  table-layout: fixed;
 }
 
 .bar1, .bar2, .bar3 {

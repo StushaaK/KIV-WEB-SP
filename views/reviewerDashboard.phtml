@@ -53,10 +53,10 @@
         <tr>
           <?php foreach ($articles as $article) : ?>
           <td>
-            <?= $article['title'] ?>
+            <?= htmlentities($article['title']) ?>
           </td>
           <td>
-            <?= $article['authors'] ?>
+            <?= htmlentities($article['authors']) ?>
           </td>
           <td>
             <?= $article['state'] ?>
@@ -86,7 +86,7 @@
         <tr>
           <?php foreach ($reviews as $review) : ?>
           <td>
-            <?= $review['title'] ?>
+            <?= htmlentities($review['title']) ?>
           </td>
           <td>
             <?= $review['average'] ?>

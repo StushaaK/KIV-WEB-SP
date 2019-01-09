@@ -132,6 +132,20 @@ class ProfileManager
     ', array($reviewerID));
   }
 
+  public function getUserAvatar($userID)
+  {
+    return Db::getOneColumn('
+    SELECT users.avatar FROM conferention.users WHERE id = ?
+    ', array($userID));
+  }
+
+  public function getArticlePdf($articleID)
+  {
+    return Db::getOneColumn('
+    SELECT articles.pdf FROM conferention.articles WHERE id = ?
+    ', array($articleID));
+  }
+
   public function getReview($reviewID) {
     return Db::getOneRow('
     SELECT articles.title, articles.pdf, reviews.id, reviews.originality_score, reviews.theme_score, reviews.technical_score, reviews.language_score, reviews.recommendation, reviews.comment
@@ -196,6 +210,8 @@ class ProfileManager
     ', array($articleID));
   }
 
+
+
   public function deleteReview($reviewID)
   {
     return Db::affectedRows('
@@ -215,6 +231,10 @@ class ProfileManager
 
     Db::affectedRows('
     DELETE FROM conferention.articles WHERE id_user = ?
+    ', array($userID));
+
+    Db::affectedRows('
+    DELETE FROM conferention.reviews WHERE user_id = ?
     ', array($userID));
 
     Db::affectedRows('

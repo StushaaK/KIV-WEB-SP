@@ -2,8 +2,8 @@
     <form class="form" action="/profile" id="newArticleForm" method="post" enctype="multipart/form-data" autocomplete="off">
       <h2>Přidat příspěvek</h2>
       <a href="/profile">< Zpět</a>
-      <input type="text" placeholder="Název příspěvku" name="title" required>
-      <input type="text" placeholder="Autoři" name="authors" required>
+      <input type="text" placeholder="Název příspěvku" name="title" maxlength="255" required>
+      <input type="text" placeholder="Autoři" name="authors" maxlength="100" required>
       <textarea name="abstract" form="newArticleForm" placeholder="Stručně popište rozebíraný problém..."></textarea>
       <div class="pdf"><label>PDF Soubor: </label>
         <input type="file" name="pdf" accept="application/pdf" required>

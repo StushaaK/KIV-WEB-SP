@@ -27,9 +27,9 @@ class LoginControler extends Controler {
       if (password_verify($_POST['password'], $user['password'])) {
           $_SESSION['message'] = "User successfuly logged in!";
           $_SESSION['userID'] = $user['id'];
-          $_SESSION['username'] = $user['username'];
-          $_SESSION['email'] = $user['email'];
-          $_SESSION['avatar'] = $user['avatar'];
+          $_SESSION['username'] = htmlentities($user['username']);
+          $_SESSION['email'] = htmlentities($user['email']);
+          $_SESSION['avatar'] = htmlentities($user['avatar']);
 
           if ($user['admin']==true)
           {

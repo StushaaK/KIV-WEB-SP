@@ -58,4 +58,5 @@ table tr.accordion-toggle:hover {
 
 .table .table {
   color: black;
+  width: 100%;
 }

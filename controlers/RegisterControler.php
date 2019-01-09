@@ -16,7 +16,7 @@ class RegisterControler extends Controler {
     //jestli se hesla shodují
     if ($_POST['password'] == $_POST['confirmpassword']) {
 
-      $userArray = array($_POST['username'], $_POST['email'], password_hash($_POST['password'], PASSWORD_DEFAULT), 'img/'.$_FILES['avatar']['name'], 0, 0);
+      $userArray = array($_POST['username'], $_POST['email'], password_hash($_POST['password'], PASSWORD_DEFAULT), 'img/avatars/'.$_FILES['avatar']['name'], 0, 0);
 
       if(!file_exists($_FILES['avatar']['tmp_name']) || !is_uploaded_file($_FILES['avatar']['tmp_name'])){
         $userArray[3] = 'img/avatar_placeholder.png';
@@ -36,7 +36,6 @@ class RegisterControler extends Controler {
           $registrationManager->registerUser($userArray);
 
           $_SESSION['message'] = "Registrace byla úspěšná. Uživatel $userArray[0] přidán do databáze";
-
           }
 
           else {

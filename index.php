@@ -1,5 +1,6 @@
 <?php
   mb_internal_encoding("UTF-8");
+  error_reporting(0);
 
   function initialAutoload($class)
   {

@@ -11,13 +11,13 @@
     <div class="col-xl-6">
       <div class="mr-0">
         <h2>
-          <?= $article['title'] ?>
+          <?= htmlentities($article['title']) ?>
         </h2>
         <hr>
         <p>
-          <?= $article['abstract'] ?>
+          <?= htmlentities($article['abstract']) ?>
         </p>
-        <a href="<?= $article['pdf'] ?>" class="btn btn-sm btn-download"><i class="fa fa-fw fa-download"></i> Stáhnout</a>
+        <a href="<?= htmlentities($article['pdf']) ?>" class="btn btn-sm btn-download"><i class="fa fa-fw fa-download"></i> Stáhnout</a>
       </div>
     </div>
     <?php endforeach ?>

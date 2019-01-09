@@ -30,6 +30,8 @@ class ProfileControler extends Controler {
 
       if(isset($_POST['deleteUser'])) {
 
+        $userAvatar = $profileManager->getUserAvatar($_POST['user_id']);
+        if ($userAvatar != "img/avatar_placeholder.png") unlink($userAvatar);
         $profileManager->deleteAccount($_POST['user_id']);
 
         $this->redirect('profile');
@@ -150,8 +152,10 @@ class ProfileControler extends Controler {
     if(isset($_POST['deleteArticle'])) {
       $articlesByUser=$profileManager->getAllCreatedArticlesID($_SESSION['userID']);
 
-      //Ošetření hidden elementu, kontorla zda uživatel napsal daný článek
+      //Ošetření hidden elementu, kontrola zda uživatel napsal daný článek
       if ($_SESSION['accountType']=="administrátor" OR in_array($_POST['article_id'], $articlesByUser)) {
+      $pdf = $profileManager->getArticlePdf($_POST['article_ID']);
+      unlink($pdf);
       $_SESSION['message'] = "Bylo smazáno ".$profileManager->deleteArticle($_POST['article_id'])." položek";
       $this->redirect('profile');
       }
@@ -193,8 +197,10 @@ class ProfileControler extends Controler {
     if(isset($_POST['deleteACC'])) {
 
       $profileManager->deleteAccount($_SESSION['userID']);
+      if ($_SESSION['avatar'] != "img/avatar_placeholder.png") unlink($_SESSION['avatar']);
 
       $_SESSION['logged_in'] = 0;
+      session_unset();
       session_destroy();
       $this->redirect('landing');
     }
